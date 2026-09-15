@@ -1,0 +1,119 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[ukrainian]{babel}
+
+\usepackage[
+    left=30mm,
+    right=15mm,
+    top=20mm,
+    bottom=20mm
+]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    inputencoding=utf8,
+    extendedchars=true,
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    columns=fullflexible,
+    keepspaces=true
+}
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[
+    hidelinks
+]{hyperref}
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{0pt}
+\setcounter{tocdepth}{1}
+
+\begin{document}
+
+
+\begin{titlepage}
+
+\begin{center}
+
+КИЇВСЬКИЙ ПОЛІТЕХНІЧНИЙ ІНСТИТУТ
+ІМ. ІГОРЯ СІКОРСЬКОГО
+
+\vspace{2cm}
+
+{\large ЗВІТ}\\
+{\large ДО ЛАБОРАТОРНОЇ РОБОТИ №1}
+
+\vspace{1cm}
+
+{\large на тему:}
+
+\vspace{0.5cm}
+
+\textbf{«Вибір та реалізація базових фреймворків та бібліотек»}
+
+\end{center}
+
+\vfill
+
+\begin{flushright}
+\begin{minipage}{0.4\textwidth}
+
+Виконали:\\
+студентки групи ФІ-62 мн\\
+Дегтярьова Марія\\
+Тимошенко Марія
+
+\end{minipage}
+\end{flushright}
+
+\vfill
+
+\begin{center}
+Київ -- 2026
+\end{center}
+
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\input{1.tex}
+\input{2.tex}
+\input{3.tex}
+\input{4.tex}
+\input{5.tex}
+
+
+\section*{Висновки}
+\addcontentsline{toc}{section}{Висновки}
+
+% Тут будуть висновки
+
+
+\section*{Перелік використаних джерел}
+\addcontentsline{toc}{section}{Перелік використаних джерел}
+
+% Тут будуть джерела
+\begin{enumerate}
+
+\item
+Шось .
+\textit{Щось}.
+\\
+\url{https://shos.tex}
+
+\end{enumerate}
+
+\end{document}
