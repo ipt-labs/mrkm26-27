@@ -1,0 +1,209 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[ukrainian]{babel}
+
+\usepackage[
+    left=20mm,
+    right=20mm,
+    top=20mm,
+    bottom=20mm
+]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{indentfirst}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    inputencoding=utf8,
+    extendedchars=true,
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    columns=fullflexible,
+    showspaces=false,
+    showstringspaces=false,
+    keywordstyle=\color{blue},
+    stringstyle=\color{green!50!black},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    numbersep=8pt
+}
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[
+    hidelinks
+]{hyperref}
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{0pt}
+\setcounter{tocdepth}{1}
+
+\begin{document}
+
+
+\begin{titlepage}
+
+\begin{center}
+
+КИЇВСЬКИЙ ПОЛІТЕХНІЧНИЙ ІНСТИТУТ
+ІМ. ІГОРЯ СІКОРСЬКОГО
+
+\vspace{2cm}
+
+{\large ЗВІТ}\\
+{\large ДО ЛАБОРАТОРНОЇ РОБОТИ №1}
+
+\vspace{1cm}
+
+{\large на тему:}
+
+\vspace{0.5cm}
+
+\textbf{«Вибір та реалізація базових фреймворків та бібліотек»}
+
+\end{center}
+
+\vfill
+
+\begin{flushright}
+\begin{minipage}{0.4\textwidth}
+
+Виконали:\\
+студентки групи ФІ-62 мн\\
+Дегтярьова Марія\\
+Тимошенко Марія
+
+\end{minipage}
+\end{flushright}
+
+\vfill
+
+\begin{center}
+Київ -- 2026
+\end{center}
+
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\input{1.tex}
+\input{2.tex}
+\input{3.tex}
+\input{4.tex}
+\input{5.tex}
+
+
+\section*{Висновки}
+\addcontentsline{toc}{section}{Висновки}
+
+Під час виконання лабораторної роботи ми дослідили теоретичні та практичні засади функціонування сучасних криптографічних бібліотек, критерії їх вибору для різних архітектурних платформ, а також здобули практичні навички роботи з криптографічними API.
+
+Аналізуючи принципи побудови криптографічного ПЗ, ми з'ясували, що самостійна реалізація стандартних алгоритмів є неприпустимою в прикладному програмуванні, оскільки навіть математично точний код без належного аудиту стає вразливим до атак побічними каналами (зокрема, через процесорний кеш та коливання часу виконання). Саме тому критично важливо використовувати готові й стандартизовані бібліотеки. Водночас застосування низькорівневих інтерфейсів (\texttt{hazmat}) вимагає глибокого розуміння примітивів, адже помилки в ручному виборі режимів шифрування, повторне використання nonce або некоректна обробка доповнення нівелюють увесь захист. Натомість високорівневі API завдяки підходу \textit{misuse-resistance} мінімізують людський фактор і гарантують безпеку за замовчуванням.
+
+На основі детального зіставлення бібліотек \texttt{cryptography} та \texttt{PyCryptodome} за 15 параметрами ми визначили, що для екосистеми Python найбільш обґрунтованим вибором є \texttt{cryptography}. Ця бібліотека спирається на надійний бекенд OpenSSL у поєднанні з пам'ятобезпечним ядром на мові Rust, активно розвивається спільнотою PyCA, підтримує FIPS-сумісний режим роботи та забезпечує доступ до сучасних криптографічних стандартів.
+
+Практична частина роботи дозволила нам на практиці переконатися в надійності сучасних криптографічних механізмів. Експеримент із симетричним автентифікованим шифруванням AES-GCM наочно підтвердив властивості цілісності AEAD-режимів: спотворення хоча б одного байта шифротексту миттєво викликало помилку автентифікаційного тегу (\texttt{InvalidTag}). Аналогічно, під час дослідження цифрового підпису Ed25519 будь-яка спроба модифікації вхідного повідомлення робила підпис недійсним із викликом винятку \texttt{InvalidSignature}, що підтверджує його чутливість до змін і здатність гарантувати невідмовність авторства.
+
+Розглядаючи вимоги до різних IT-систем, ми дійшли висновку, що криптографічні засоби мають суворо відповідати обмеженням середовища: для мобільних застосунків та сервісів підпису пріоритетом є апаратна ізоляція ключів (Keystore, Secure Enclave, HSM), тоді як для IoT-пристроїв ключовими залишаються компактність коду та апаратне прискорення. У межах індивідуального завдання для Backend-сервісу ми обґрунтували, що належний захист конфіденційних даних досягається лише комплексним підходом: поєднанням стійкого алгоритму AES-GCM, безпечного виведення ключів, відмови від збереження секретів у вихідному коді на користь спеціалізованих засобів керування ключами та обов'язкового використання системних генераторів випадкових чисел.
+
+\section*{Перелік використаних джерел}
+\addcontentsline{toc}{section}{Перелік використаних джерел}
+
+% Тут будуть джерела
+\begin{thebibliography}{99} 
+
+    \bibitem{OWASP}
+    \textit{OWASP}.
+    \\
+    \url{https://cheatsheetseries.owasp.org/index.html}
+
+
+    \bibitem{Cryptographic Primitive}
+    \textit{Cryptographic Primitive}.
+    \\
+    \url{https://csrc.nist.gov/glossary/term/cryptographic_primitive}
+
+
+    \bibitem{Crypto Protocols}
+    \textit{Crypto Protocols}.
+    \\
+    \url{https://web.archive.org/web/20170829004310/http://www.ccs-labs.org/~dressler/teaching/netzsicherheit-ws0304/07_CryptoProtocols_2on1.pdf}
+
+    \bibitem{Crypto Primitive Wiki}
+    \textit{Crypto Primitive Wiki}.
+    \\
+    \url{https://en.wikipedia.org/wiki/Cryptographic_primitive}
+
+    \bibitem{cryptography}
+    \textit{cryptography}.
+    \\
+    \url{https://cryptography.io/en/stable/}
+ 
+    \bibitem{cryptography git}
+    \textit{cryptography git}.
+    \\
+    \url{https://github.com/pyca/cryptography}   
+
+    \bibitem{Libsodium}
+    \textit{Libsodium}.
+    \\
+    \url{https://doc.libsodium.org/}
+
+    \bibitem{Tink}
+    \textit{Tink}.
+    \\
+    \url{https://developers.google.com/tink}
+
+    \bibitem{FIPS140-3}
+    \textit{FIPS PUB 140-3}.
+    \\
+    \url{https://csrc.nist.gov/pubs/fips/140-3/final}
+
+    \bibitem{CMVP}
+    \textit{CMVP}.
+    \\
+    \url{https://csrc.nist.gov/projects/cryptographic-module-validation-program}
+
+    \bibitem{SP800-140}
+    \textit{NIST SP 800-140}.
+    \\
+    \url{https://csrc.nist.gov/pubs/sp/800/140/final}
+
+    \bibitem{RFC8017}
+    \textit{RFC 8017 (PKCS \#1 v2.2)}.
+    \\
+    \url{https://www.rfc-editor.org/rfc/rfc8017}
+
+    \bibitem{SP800-57}
+    \textit{NIST SP 800-57}.
+    \\
+    \url{https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final}
+
+    \bibitem{PyCryptodome}
+    \textit{PyCryptodome}.
+    \\
+    \url{https://pycryptodome.readthedocs.io/en/latest/}
+
+    \bibitem{PyCryptodome git}
+    \textit{PyCryptodome git}.
+    \\
+    \url{https://github.com/Legrandin/pycryptodome}
+
+   \bibitem{NVD PyCryptodome}
+    \textit{NVD CVE-2023-52323 (PyCryptodome)}.
+    \\
+    \url{https://nvd.nist.gov/vuln/detail/CVE-2023-52323}
+
+\end{thebibliography}
+
+\end{document}
