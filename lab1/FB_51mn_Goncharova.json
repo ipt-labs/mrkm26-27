@@ -1,0 +1,31 @@
+{
+  "environment": "Python 3.12.0 | cryptography 50.0.1",
+  "checks_passed": 4,
+  "aead": [
+    "Алгоритм: AES-256-GCM",
+    "Повідомлення: Confidential user data: user_id=42",
+    "Ключ: 256 біт (значення не виводиться)",
+    "Nonce (12 байт): eec7ea53a62b71932ef279de",
+    "AAD: lab1|record=42|version=1",
+    "Шифротекст (34 байт):",
+    "52f699f7f3806f05eef7dcb8334b0379d31a81eecbbed939287fe9b0ba75fbfe39bd",
+    "Tag (16 байт): 11c99840dc536ede9b161b85a78098da",
+    "Відновлено: Confidential user data: user_id=42",
+    "Початкові дані: PASS",
+    "Зміна байта 0: 52 -> 53",
+    "Змінений шифротекст: InvalidTag — відхилено, PASS"
+  ],
+  "signature": [
+    "Алгоритм: Ed25519",
+    "Повідомлення: Approve document 42",
+    "Закритий ключ: створено, не експортується",
+    "Відкритий ключ (32 байт):",
+    "9b793e8533139a7ea88dd5f44b159e9a0e9898d9ea742e1da1d01773974777f4",
+    "Підпис (64 байт), hex у двох рядках:",
+    "e84bbf23b843c6b9addbadb0110082cd6f9c4106aea7390cf6fd3714a69f56bb",
+    "fc6ab8c9025a5eefab28bacfebb744eb15399d0effdcfc9d4a36af658682d90e",
+    "Перевірка початкового повідомлення: PASS",
+    "Змінене повідомлення: Approve document 43",
+    "Повторна перевірка: InvalidSignature — відхилено, PASS"
+  ]
+}
