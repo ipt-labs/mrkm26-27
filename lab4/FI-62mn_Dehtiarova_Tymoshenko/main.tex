@@ -12,7 +12,7 @@
 ]{geometry}
 \usepackage{setspace}
 \onehalfspacing
-
+\usepackage{indentfirst}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{array}
@@ -22,13 +22,20 @@
 \usepackage{xcolor}
 
 \lstset{
+    language=Python,
     inputencoding=utf8,
     extendedchars=true,
     basicstyle=\ttfamily\small,
     breaklines=true,
     frame=single,
     columns=fullflexible,
-    keepspaces=true
+    showspaces=false,
+    showstringspaces=false,
+    keywordstyle=\color{blue},
+    stringstyle=\color{green!50!black},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    numbersep=8pt
 }
 
 \usepackage{graphicx}
@@ -53,15 +60,15 @@
 \vspace{2cm}
 
 {\large ЗВІТ}\\
-{\large ДО ЛАБОРАТОРНОЇ РОБОТИ №1}
+{\large ДО ЛАБОРАТОРНОЇ РОБОТИ №4}
 
 \vspace{1cm}
 
-{\large на тему:}
+{\large на тему: Особливості реалізації програмних систем із криптографічним захистом}
 
 \vspace{0.5cm}
 
-\textbf{«Вибір та реалізація базових фреймворків та бібліотек»}
+\textbf{}
 
 \end{center}
 
@@ -94,6 +101,7 @@
 \input{3.tex}
 \input{4.tex}
 \input{5.tex}
+\input{6.tex}
 
 
 \section*{Висновки}
@@ -106,14 +114,13 @@
 \addcontentsline{toc}{section}{Перелік використаних джерел}
 
 % Тут будуть джерела
-\begin{enumerate}
+\begin{thebibliography}{99} 
 
-\item
-Шось .
-\textit{Щось}.
-\\
-\url{https://shos.tex}
+    \bibitem{1}
+    \textit{1}.
+    \\
+    \url{1.html}
 
-\end{enumerate}
+\end{thebibliography}
 
 \end{document}
