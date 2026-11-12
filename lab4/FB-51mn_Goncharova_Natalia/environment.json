@@ -1,0 +1,6 @@
+{
+  "python": "3.12.0",
+  "cryptography": "50.0.2",
+  "os": "Darwin",
+  "arch": "arm64"
+}

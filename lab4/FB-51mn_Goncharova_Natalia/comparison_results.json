@@ -1,0 +1,20 @@
+{
+  "algorithm": "HMAC-SHA256",
+  "checks": {
+    "valid_mac_accepted": true,
+    "changed_mac_rejected": true,
+    "short_mac_rejected": true,
+    "long_mac_rejected": true,
+    "prefix_loop_problem_reproduced": true
+  },
+  "first_difference_positions": [
+    0,
+    15,
+    31
+  ],
+  "unsafe_comparisons": [
+    1,
+    16,
+    32
+  ]
+}

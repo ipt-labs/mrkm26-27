@@ -1,0 +1,15 @@
+{
+  "checks": {
+    "decrypt_v1": true,
+    "decrypt_v2_after_v1_disabled": true,
+    "data_ciphertext_unchanged": true,
+    "disabled_version_rejected": true,
+    "tampered_ciphertext_rejected": true,
+    "wrong_context_rejected": true,
+    "tampered_wrapped_dek_rejected": true
+  },
+  "ciphertext_sha256": "f43d3cc553cf6a6427b4d6ac8392ac06d6767a9d3965e9ca9655f40118b2228e",
+  "raw_keys_saved": false,
+  "hardware_isolation": false,
+  "dek_changed": false
+}
