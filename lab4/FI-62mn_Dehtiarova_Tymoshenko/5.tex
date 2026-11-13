@@ -50,7 +50,7 @@ private key, слід негайно відкликати TLS-сертифіка
 
 \node[box] (client) {Клієнт /\\Користувач};
 \node[box, right=1.1cm of client] (proxy) {Reverse Proxy /\\TLS Termination};
-\node[box, right=1.3cm of proxy] (backend) {Backend-сервіс};
+\node[box, right=1.6cm of proxy] (backend) {Backend-сервіс};
 \node[box, below=1.4cm of backend] (db) {База даних\\(шифровані дані)};
 \node[box, right=1.5cm of backend] (ext) {Зовнішні\\API-сервіси};
 
@@ -58,7 +58,7 @@ private key, слід негайно відкликати TLS-сертифіка
 \node[storage, above=1.3cm of backend] (sec_store) {Ізольоване сховище секретів\\(DB Key, Signing Key,\\API Credentials)};
 
 \draw[->, thick] (client) -- node[above, font=\scriptsize] {HTTPS} (proxy);
-\draw[->, thick] (proxy) -- node[above, font=\scriptsize] {HTTP} (backend);
+\draw[->, thick] (proxy) -- node[above, font=\scriptsize] {HTTP} node[below, font=\scriptsize, align=center] {(внутрішня\\мережа)} (backend);
 \draw[->, thick] (backend) -- node[right, font=\scriptsize] {Шифровані дані} (db);
 \draw[->, thick] (backend) -- node[above, font=\scriptsize] {HTTPS} node[below, font=\scriptsize] {API Key} (ext);
 
