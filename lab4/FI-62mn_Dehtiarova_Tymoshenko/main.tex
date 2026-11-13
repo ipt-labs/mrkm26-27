@@ -1,0 +1,254 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[ukrainian]{babel}
+
+\usepackage[
+    left=20mm,
+    right=20mm,
+    top=20mm,
+    bottom=20mm
+]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{indentfirst}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    inputencoding=utf8,
+    extendedchars=true,
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    columns=fullflexible,
+    showspaces=false,
+    showstringspaces=false,
+    keywordstyle=\color{blue},
+    stringstyle=\color{green!50!black},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    numbersep=8pt
+}
+
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usepackage{float}
+\usepackage[
+    hidelinks
+]{hyperref}
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{0pt}
+\setcounter{tocdepth}{1}
+
+\begin{document}
+
+
+\begin{titlepage}
+
+\begin{center}
+
+КИЇВСЬКИЙ ПОЛІТЕХНІЧНИЙ ІНСТИТУТ
+ІМ. ІГОРЯ СІКОРСЬКОГО
+
+\vspace{2cm}
+
+{\large ЗВІТ}\\
+{\large ДО ЛАБОРАТОРНОЇ РОБОТИ №4}
+
+\vspace{1cm}
+
+{\large на тему: Особливості реалізації програмних систем із криптографічним захистом}
+
+\vspace{0.5cm}
+
+\textbf{}
+
+\end{center}
+
+\vfill
+
+\begin{flushright}
+\begin{minipage}{0.4\textwidth}
+
+Виконали:\\
+студентки групи ФІ-62 мн\\
+Дегтярьова Марія\\
+Тимошенко Марія
+
+\end{minipage}
+\end{flushright}
+
+\vfill
+
+\begin{center}
+Київ -- 2026
+\end{center}
+
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\input{1.tex}
+\input{2.tex}
+\input{3.tex}
+\input{4.tex}
+\input{5.tex}
+\input{6.tex}
+
+
+\section*{Висновки}
+\addcontentsline{toc}{section}{Висновки}
+
+Під час виконання лабораторної роботи ми дослідили теоретичні та практичні засади безпечного керування
+криптографічними ключами в програмних системах, механізми захисту секретної інформації в оперативній
+пам'яті, вразливості реалізацій до атак за побічними каналами, а також описали систему керування ключами
+та проаналізували їхній життєвий цикл.
+
+Аналізуючи способи зберігання ключової інформації, ми з'ясували, що розміщення секретів у вихідному коді,
+конфігураційних файлах або спільній із застосунком файловій системі створює критичні ризики витоку через
+системи контролю версій, дампи чи резервні копії. Надійний захист забезпечується використанням
+ізольованих сховищ операційних систем (Windows Credential Manager, DPAPI, macOS Keychain, Android
+Keystore), спеціалізованих менеджерів секретів (KMS) або апаратних криптографічних модулів (TPM, Secure
+Enclave, HSM). Застосування апаратної ізоляції в поєднанні з атрибутом non-exportable та стандартизованим
+інтерфейсом PKCS\#11 дозволяє виконувати операції шифрування й цифрового підпису без завантаження
+закритих ключів у звичайну оперативну пам'ять хост-системи.
+
+Дослідження захисту ключів у оперативній пам'яті та атак за побічними каналами підтвердило, що
+математичної стійкості криптографічного алгоритму недостатньо для гарантування безпеки системи. Відкриті
+ключі в RAM можуть бути скомпрометовані через механізми memory dump, crash dump або область підкачки
+(swap), а в мовах із автоматичним керуванням пам'яттю їх гарантоване затирання ускладнюється
+недетермінованістю збирача сміття та незмінністю рядків, тому для роботи із секретами слід використовувати
+змінні масиви байтів зі спеціальними функціями безпечного очищення або виконувати криптографічні
+операції безпосередньо всередині HSM. Крім того, ми переконалися, що навіть стійкий алгоритм можна
+скомпрометувати через витік інформації за побічними каналами --- через час виконання операцій (timing
+attacks), особливості використання кеш-пам'яті (cache attacks), споживання електроенергії або
+електромагнітне випромінювання. Зокрема, використання стандартних функцій порівняння з раннім виходом
+для перевірки MAC чи токенів робить застосунок вразливим до атак за часом виконання, тому критично
+важливо застосовувати спеціалізовані функції порівняння за сталим часом (constant-time comparison) із
+перевірених бібліотек.
+
+Розбір типових інцидентів порушення безпеки (потрапляння ключа до публічного Git-репозиторію,
+зберігання master key поруч із базою даних, логування секретів, компрометація ключа підпису) довів, що
+помилки конфігурування або відсутність ізоляції здатні повністю знівелювати надійність криптографічних
+алгоритмів. У разі компрометації недостатньо просто видалити секрет із поточного стану системи ---
+необхідний чіткий регламент реагування, що охоплює очищення історії репозиторію, аудит журналів подій,
+негайне відкликання сертифікатів через CRL/OCSP та перешифрування даних.
+
+У межах проєктної частини роботи ми описали архітектуру системи керування ключами для клієнт
+серверного застосунку з розподілом сховищ секретів за рівнем критичності та детально проаналізували
+життєвий цикл ключів шифрування БД і цифрового підпису. Ми дійшли висновку, що комплексна безпека
+ключової інфраструктури досягається лише завдяки поєднанню апаратної ізоляції, принципу мінімально
+необхідних прав доступу, конвертного шифрування (Envelope Encryption) із версіонуванням ключів для
+безпечної планової ротації, а також процедур гарантованого затирання нулями (zeroization) після завершення
+їхнього життєвого циклу.
+
+
+\section*{Перелік використаних джерел}
+\addcontentsline{toc}{section}{Перелік використаних джерел}
+
+% Тут будуть джерела
+\begin{thebibliography}{99}
+
+    \bibitem{owaspkey}
+    OWASP Foundation.
+    \textit{Key Management Cheat Sheet}.
+    \\
+    \url{https://cheatsheetseries.owasp.org/cheatsheets/Key_Management_Cheat_Sheet.html}
+
+    \bibitem{owaspstorage}
+    OWASP Foundation.
+    \textit{Cryptographic Storage Cheat Sheet}.
+    \\
+    \url{https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html}
+
+    \bibitem{microsoftcred}
+    Microsoft.
+    \textit{Windows Data Protection}.
+    \\
+    \url{https://learn.microsoft.com/en-us/dotnet/standard/security/how-to-use-data-protection}
+
+    \bibitem{applekeychain}
+    Apple Developer.
+    \textit{Keychain Services}.
+    \\
+    \url{https://developer.apple.com/documentation/security/keychain_services}
+
+    \bibitem{androidkeystore}
+    Android Developers.
+    \textit{Android Keystore System}.
+    \\
+    \url{https://developer.android.com/privacy-and-security/keystore}
+
+    \bibitem{microsofttpm}
+    Microsoft.
+    \textit{Trusted Platform Module Technology Overview}.
+    \\
+    \url{https://learn.microsoft.com/en-us/windows/security/hardware-security/tpm/trusted-platform-module-overview}
+
+    \bibitem{applesecure}
+    Apple Developer.
+    \textit{Protecting Keys with the Secure Enclave}.
+    \\
+    \url{https://developer.apple.com/documentation/security/protecting-keys-with-the-secure-enclave}
+
+    \bibitem{awshsm}
+    Amazon Web Services.
+    \textit{What is AWS CloudHSM?}.
+    \\
+    \url{https://docs.aws.amazon.com/cloudhsm/latest/userguide/}
+
+    \bibitem{nistfips}
+    National Institute of Standards and Technology.
+    \textit{FIPS 140-3: Security Requirements for Cryptographic Modules}.
+    \\
+    \url{https://csrc.nist.gov/pubs/fips/140-3/final}
+
+    \bibitem{nistmemory}
+    National Institute of Standards and Technology.
+    \textit{Guidelines for Media Sanitization (NIST SP 800-88 Rev. 2)}.
+    \\
+    \url{https://csrc.nist.gov/pubs/sp/800/88/r2/final}
+
+    \bibitem{nist57}
+    National Institute of Standards and Technology.
+    \textit{Recommendation for Key Management: Part 1 -- General (NIST SP 800-57 Part 1 Rev. 5)}.
+    \\
+    \url{https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final}
+
+    \bibitem{pkcs11}
+    OASIS Open.
+    \textit{PKCS \#11 Specification Version 3.1}. 23 July 2023.
+    \\
+    \url{https://docs.oasis-open.org/pkcs11/pkcs11-spec/v3.1/os/pkcs11-spec-v3.1-os.html}
+
+    \bibitem{ccportal}
+    Common Criteria Recognition Arrangement.
+    \textit{Common Criteria for Information Technology Security Evaluation. Part 1: Introduction and general model (CC:2022 Release 1)}.
+    \\
+    \url{https://www.commoncriteriaportal.org/files/ccfiles/CC2022PART1R1.pdf}
+
+    \bibitem{pcihsm}
+    PCI Security Standards Council.
+    \textit{Payment Card Industry (PCI) PIN Transaction Security (PTS) Hardware Security Module (HSM): Modular Security Requirements, Version 3.0}. June 2016.
+    \\
+    \url{https://listings.pcisecuritystandards.org/documents/PCI_HSM_Security_Requirements_v3_2016_final.pdf}
+
+    \bibitem{cwe316}
+    The MITRE Corporation.
+    \textit{CWE-316: Cleartext Storage of Sensitive Information in Memory}.
+    \\
+    \url{https://cwe.mitre.org/data/definitions/316.html}
+
+\end{thebibliography}
+
+\end{document}
