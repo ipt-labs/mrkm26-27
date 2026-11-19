@@ -1,0 +1,11 @@
+{
+  "record_id": "record:demo-001",
+  "data_nonce": "cdAo0WXNupqqHmJY",
+  "ciphertext": "r+GxdepsNlNI81AWyDCPWrBU96/hLETTqdN+binpjBpujja2ZSOCSfXoClJFHA==",
+  "aad": "cmVjb3JkOmRlbW8tMDAx",
+  "envelope": {
+    "kek_version": "kek-v2",
+    "nonce": "Jcy7iE2hPdYy81Mb",
+    "wrapped_dek": "JDN7+dosyEJLfuxAQ2ryanNJE7xVv2NWPBByw8B9dXB4fbTNNtcdJ6sQeH4fIqFK"
+  }
+}

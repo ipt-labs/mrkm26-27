@@ -1,0 +1,8 @@
+{
+  "buffer_bytes": 32,
+  "checks": {
+    "original_buffer_zeroed": true,
+    "independent_copy_survives": true
+  },
+  "guaranteed_process_wide_erasure": false
+}
