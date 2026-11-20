@@ -1,0 +1,26 @@
+{
+  "environment": {
+    "python": "3.12.0",
+    "cryptography": "50.0.2",
+    "platform": "Darwin",
+    "architecture": "arm64"
+  },
+  "algorithm": "X25519 + HKDF-SHA256",
+  "alice_public_hex": "2e41161623d7f79fa13da802f8b75c0165381d781d5dc13739992c5d47f4476f",
+  "bob_public_hex": "9c0fe418c126d6a9d87ceb7305cb045f90edcb0a7279627ab1abb5f75bf13417",
+  "shared_secret_bytes": 32,
+  "fingerprints_sha256": {
+    "alice": "22d04b8152d874b4d4010c75871a82cf03bdfae8f500dc460469da2ce3d531d3",
+    "bob": "22d04b8152d874b4d4010c75871a82cf03bdfae8f500dc460469da2ce3d531d3"
+  },
+  "derived_key_bytes": 32,
+  "public_salt_hex": "8a5211545fa883fd2f4b217fae1c71d35b8823187898cded65b10772fff71279",
+  "public_context_hex": "6c6162332f7832353531392f61657332353667636d2f76312e41161623d7f79fa13da802f8b75c0165381d781d5dc13739992c5d47f4476f9c0fe418c126d6a9d87ceb7305cb045f90edcb0a7279627ab1abb5f75bf13417",
+  "checks": {
+    "shared_secrets_equal": true,
+    "derived_keys_equal": true,
+    "aead_roundtrip": true,
+    "aead_tamper_rejected": true
+  },
+  "authentication_of_peers": false
+}

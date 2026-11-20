@@ -1,0 +1,19 @@
+{
+  "environment": {
+    "python": "3.12.0",
+    "cryptography": "50.0.2",
+    "platform": "Darwin",
+    "architecture": "arm64"
+  },
+  "algorithm": "Ed25519",
+  "message": "Лабораторна 3: підтвердження цілісності документа.",
+  "signature_bytes": 64,
+  "public_key_hex": "dc3d67d59438c85d9b7f091d4249c3c45bf45f89364a02708c84dcf1eee06462",
+  "other_public_key_hex": "a452ed80e90160db3966a4cb16f13fafe4b73f87f1b1c94f3ed9cca1e515a89a",
+  "signature_hex": "438075b9489b33441803b7119359159fc8000c689be59f018a9e802bd890d9fab707adc0104b321020f0cf0cad0c9c8bdf4c30b5d85e8a8e8b7b849c196a080a",
+  "checks": {
+    "original_accepted": true,
+    "changed_rejected": true,
+    "other_key_rejected": true
+  }
+}
